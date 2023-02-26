@@ -63,7 +63,7 @@ class Question(TimeStampedModel):
     )
 
     def __str__(self):
-        return f"{self.description}"
+        return f"{self.exam.name} - N°0{self.number} - {self.description}"
 
     class Meta:
         verbose_name = "Pregunta"
@@ -72,17 +72,17 @@ class Question(TimeStampedModel):
 
 
 class Answer(TimeStampedModel):
-    question = models.OneToOneField(
+    question = models.ForeignKey(
         Question,
         on_delete=models.SET_NULL,
         null=True,
-        related_name="answer",
+        related_name="answers",
         verbose_name="Pregunta",
     )
-    student = models.OneToOneField(
+    student = models.ForeignKey(
         Student,
         on_delete=models.CASCADE,
-        related_name="answer",
+        related_name="answers",
         verbose_name="Estudiante",
     )
     description = models.TextField(

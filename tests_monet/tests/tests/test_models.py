@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from tests_monet.tests.models import Answer, Question, Student, Exam
+from tests_monet.tests.models import Answer, Exam, Question, Student
 
 
 class ModelTest:
@@ -42,7 +42,7 @@ class TestModelTest(ModelTest, TestCase):
 
 class QuestionModelTest(ModelTest, TestCase):
     def test_str(self):
-        self.assertEqual(str(self.test_question), "Solo prueba")
+        self.assertEqual(str(self.test_question), "Examen Prueba - N°01 - Solo prueba")
 
     def tearDown(self):
         self.test_question.delete()

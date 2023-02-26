@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 
 from tests_monet.users.forms import CustomUserChangeForm, CustomUserCreationForm
@@ -48,3 +49,7 @@ class UserAdmin(auth_admin.UserAdmin):
     list_display = ["id", "email"]
     list_display_links = ["email"]
     search_fields = ["email"]
+    list_filter = []
+
+
+admin.site.unregister(Group)
