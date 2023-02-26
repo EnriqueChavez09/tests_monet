@@ -3,20 +3,36 @@ from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from tests_monet.users.forms import UserAdminChangeForm, UserAdminCreationForm
+from tests_monet.users.forms import CustomUserChangeForm, CustomUserCreationForm
 
 User = get_user_model()
 
 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
-    form = UserAdminChangeForm
-    add_form = UserAdminCreationForm
-    fieldsets = (
-        (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("name", "email")}),
+    form = CustomUserChangeForm
+    add_form = CustomUserCreationForm
+    add_fieldsets = (
         (
-            _("Permissions"),
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("email", "password1", "password2"),
+            },
+        ),
+    )
+    fieldsets = (
+        (
+            _("Información Personal"),
+            {
+                "fields": (
+                    "email",
+                    "password",
+                )
+            },
+        ),
+        (
+            _("Permisos"),
             {
                 "fields": (
                     "is_active",
@@ -27,7 +43,8 @@ class UserAdmin(auth_admin.UserAdmin):
                 ),
             },
         ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+        (_("Fechas Importantes"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["username", "name", "is_superuser"]
-    search_fields = ["name"]
+    list_display = ["id", "email"]
+    list_display_links = ["email"]
+    search_fields = ["email"]

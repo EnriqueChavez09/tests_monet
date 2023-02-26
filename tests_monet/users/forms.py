@@ -1,42 +1,25 @@
-from allauth.account.forms import SignupForm
-from allauth.socialaccount.forms import SignupForm as SocialSignupForm
-from django.contrib.auth import forms as admin_forms
-from django.contrib.auth import get_user_model
-from django.utils.translation import gettext_lazy as _
-
-User = get_user_model()
+from allauth.account.models import EmailAddress
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 
-class UserAdminChangeForm(admin_forms.UserChangeForm):
-    class Meta(admin_forms.UserChangeForm.Meta):
-        model = User
+class CustomUserChangeForm(UserChangeForm):
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        self.save_m2m()
+        last_email = EmailAddress.objects.filter(user=user).last()
+        if last_email:
+            last_email.email = user.email
+            last_email.save()
+        return user
 
 
-class UserAdminCreationForm(admin_forms.UserCreationForm):
-    """
-    Form for User Creation in the Admin Area.
-    To change user signup, see UserSignupForm and UserSocialSignupForm.
-    """
-
-    class Meta(admin_forms.UserCreationForm.Meta):
-        model = User
-
-        error_messages = {
-            "username": {"unique": _("This username has already been taken.")}
-        }
-
-
-class UserSignupForm(SignupForm):
-    """
-    Form that will be rendered on a user sign up section/screen.
-    Default fields will be added automatically.
-    Check UserSocialSignupForm for accounts created from social.
-    """
-
-
-class UserSocialSignupForm(SocialSignupForm):
-    """
-    Renders the form when user has signed up using social accounts.
-    Default fields will be added automatically.
-    See UserSignupForm otherwise.
-    """
+class CustomUserCreationForm(UserCreationForm):
+    def save(self, commit=True):
+        user = super().save()
+        EmailAddress.objects.create(
+            user=user,
+            email=user.email,
+            verified=True,
+            primary=True,
+        )
+        return user
