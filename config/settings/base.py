@@ -292,6 +292,8 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Monet API",
     "DESCRIPTION": "Documentation of API endpoints of tests_monet",
     "VERSION": "1.0.0",
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SERVE_PUBLIC': True,
     "SWAGGER_UI_SETTINGS": {
     "persistAuthorization":True,
     },
