@@ -10,7 +10,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
     list = extend_schema(description="Permite obtener una lista de respuestas según estudiante"),
     retrieve = extend_schema(description="Permite obtener el detalle de respuesta según estudiante"),
     create = extend_schema(description="Permite crear una respuesta según estudiante"),
-    update = extend_schema(description="Permite actualizar una respuesta según estudiante"),
+    partial_update = extend_schema(description="Permite actualizar una respuesta según estudiante"),
     delete = extend_schema(description="Permite eliminar una respuesta según estudiante"),
 )
 class AnswerViewSet(viewsets.ModelViewSet):
