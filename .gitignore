@@ -333,3 +333,5 @@ tests_monet/media/
 .env
 .envs/*
 !.envs/.local/
+db.sqlite3
+db.sqlite3-journal

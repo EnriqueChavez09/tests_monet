@@ -1,37 +1,22 @@
-# from django.urls import reverse
+from django.test import TestCase
 
-# from tests_monet.users.models import User
+from tests_monet.users.tests.model_test import ModelTest
+from tests_monet.utils.helpers import (
+    get_admin_add,
+    get_admin_changelist,
+    get_admin_view,
+)
 
 
-# class TestUserAdmin:
-#     def test_changelist(self, admin_client):
-#         url = reverse("admin:users_user_changelist")
-#         response = admin_client.get(url)
-#         assert response.status_code == 200
+class TestUserAdmin(ModelTest, TestCase):
+    def test_view_user(self):
+        response = self.client.get(get_admin_view(self.test_user))
+        self.assertEqual(response.status_code, 200)
 
-#     def test_search(self, admin_client):
-#         url = reverse("admin:users_user_changelist")
-#         response = admin_client.get(url, data={"q": "test"})
-#         assert response.status_code == 200
+    def test_changelist_users(self):
+        response = self.client.get(get_admin_changelist(self.test_user))
+        self.assertEqual(response.status_code, 200)
 
-#     def test_add(self, admin_client):
-#         url = reverse("admin:users_user_add")
-#         response = admin_client.get(url)
-#         assert response.status_code == 200
-
-#         response = admin_client.post(
-#             url,
-#             data={
-#                 "username": "test",
-#                 "password1": "My_R@ndom-P@ssw0rd",
-#                 "password2": "My_R@ndom-P@ssw0rd",
-#             },
-#         )
-#         assert response.status_code == 302
-#         assert User.objects.filter(username="test").exists()
-
-#     def test_view_user(self, admin_client):
-#         user = User.objects.get(username="admin")
-#         url = reverse("admin:users_user_change", kwargs={"object_id": user.pk})
-#         response = admin_client.get(url)
-#         assert response.status_code == 200
+    def test_add_user(self):
+        response = self.client.get(get_admin_add(self.test_user))
+        self.assertEqual(response.status_code, 200)

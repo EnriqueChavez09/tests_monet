@@ -1,27 +1,6 @@
 from django.test import TestCase
 
-from tests_monet.tests.models import Answer, Exam, Question, Student
-
-
-class ModelTest:
-    def setUp(self):
-        self.test_student = Student(
-            email="prueba@prueba.com", names="Test", surnames="Chavez"
-        )
-        self.test_student.save()
-        self.test_exam = Exam(name="Examen Prueba", description="Solo prueba")
-        self.test_exam.save()
-        self.test_question = Question(
-            number=1, description="Solo prueba", exam=self.test_exam, active=True
-        )
-        self.test_question.save()
-        self.test_answer = Answer(
-            description="Solo prueba",
-            question=self.test_question,
-            student=self.test_student,
-            active=True,
-        )
-        self.test_answer.save()
+from tests_monet.tests.tests.model_test import ModelTest
 
 
 class StudentModelTest(ModelTest, TestCase):
