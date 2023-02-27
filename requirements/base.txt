@@ -21,3 +21,4 @@ django-cors-headers==3.14.0  # https://github.com/adamchainz/django-cors-headers
 drf-spectacular==0.25.1  # https://github.com/tfranzel/drf-spectacular
 dj-rest-auth==3.0.0 # https://dj-rest-auth.readthedocs.io/en/latest/installation.html
 djangorestframework-camel-case==1.4.2 # https://github.com/vbabiy/djangorestframework-camel-case
+djangorestframework-simplejwt==5.2.2 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
