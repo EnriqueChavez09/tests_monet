@@ -294,7 +294,8 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SWAGGER_UI_SETTINGS": {
     "persistAuthorization":True,
-    }
+    },
+    "SERVERS": [ {"url": "http://localhost/", "description": "Local"},{"url": "https://tests.dev3ch.com/", "description": "Producción"}]
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
