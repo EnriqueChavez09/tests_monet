@@ -1,0 +1,23 @@
+name: Deploy Production
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy-to-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Connect ssh
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /home/ubuntu/tests_monet
+            git pull origin main
+            sudo env/bin/python manage.py migrate
+            sudo systemctl daemon-reload
+            sudo systemctl restart gunicorn
+            sudo systemctl restart nginx
+          host: ${{ secrets.HOST_DNS }}
+          user: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
